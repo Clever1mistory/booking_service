@@ -1,0 +1,37 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: true
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/booking_service_db
+    username: postgres
+    password: postgres
+    hikari:
+      schema: app_schema
+      connection-init-sql: CREATE SCHEMA IF NOT EXISTS app_schema
+      connection-timeout: 10000
+
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/statistics_database?authSource=admin
+
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: stats
+      auto-offset-reset: earliest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+    listener:
+      missing-topics-fatal: false
+
+app:
+  kafka:
+    userRegistrations: "user-registrations"
+    bookings: "room-bookings"
+    groupId: "statistics"
